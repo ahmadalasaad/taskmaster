@@ -6,15 +6,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 
-public class AllTask extends AppCompatActivity {
+public class TaskDetail extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_task);
+        setContentView(R.layout.activity_task_detail);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        TextView courseNameLabel = findViewById(R.id.taskLabel);
+        String taskName = getIntent().getExtras().get("taskName").toString();
+        courseNameLabel.setText(taskName);
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
