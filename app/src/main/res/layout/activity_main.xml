@@ -8,15 +8,15 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="133dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="68dp"
-        android:text="My  Tasks"
+        android:layout_width="137dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="64dp"
+        android:text="tasks"
         android:textSize="25sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/userNamePrev"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -45,10 +45,11 @@
         android:id="@+id/imageView"
         android:layout_width="331dp"
         android:layout_height="405dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/userNamePrev"
         app:srcCompat="@drawable/download" />
 
     <Button
@@ -86,14 +87,14 @@
 
     <TextView
         android:id="@+id/userNamePrev"
-        android:layout_width="169dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="68dp"
+        android:layout_width="117dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="64dp"
         android:text="User Name"
         android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
