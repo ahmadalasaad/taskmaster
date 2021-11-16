@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         String userName = sharedPreferences.getString("userName","User Name");
-        Toast.makeText(this, userName, Toast.LENGTH_LONG).show();
         TextView previewUserName = findViewById(R.id.userNamePrev);
         previewUserName.setText(userName);
     }
