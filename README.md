@@ -19,3 +19,10 @@ I added two more  Activities :
 * Setting : that provide a field and submit button , when user submit user name in field it will  provide in home page
 
 ![Task Detail](./screenshots/lab27.PNG)
+
+## lab28
+
+* Today, you’ll refactor your homepage to look snazzy, with a RecyclerView full of Task data
+* Refactor your homepage to use a RecyclerView for displaying Task data.
+
+![Home Page](./screenshots/lab28.PNG)
