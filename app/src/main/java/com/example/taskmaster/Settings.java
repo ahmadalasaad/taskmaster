@@ -32,7 +32,8 @@ public class Settings extends AppCompatActivity {
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Settings.this);
                 sharedPreferences.edit().putString("userName",userName+"'s").apply();
                 Toast.makeText(Settings.this,"submitted!", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(Settings.this,MainActivity.class));
+//                startActivity(new Intent(Settings.this,MainActivity.class));
+                finish();
 
             }
         });
