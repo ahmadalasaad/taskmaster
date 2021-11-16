@@ -25,4 +25,4 @@ I added two more  Activities :
 * Today, you’ll refactor your homepage to look snazzy, with a RecyclerView full of Task data
 * Refactor your homepage to use a RecyclerView for displaying Task data.
 
-![Task Detail](./screenshots/lab28.PNG)
+![Home Page](./screenshots/lab28.PNG)
