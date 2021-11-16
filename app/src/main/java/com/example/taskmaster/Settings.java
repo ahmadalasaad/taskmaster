@@ -30,7 +30,7 @@ public class Settings extends AppCompatActivity {
                 EditText userNameField=findViewById(R.id.userName);
                 String userName = userNameField.getText().toString();
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Settings.this);
-                sharedPreferences.edit().putString("userName",userName).apply();
+                sharedPreferences.edit().putString("userName",userName+"'s").apply();
                 Toast.makeText(Settings.this,"submitted!", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(Settings.this,MainActivity.class));
 
