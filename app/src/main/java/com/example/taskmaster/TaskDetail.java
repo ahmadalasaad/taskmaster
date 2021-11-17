@@ -17,9 +17,19 @@ public class TaskDetail extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        TextView courseNameLabel = findViewById(R.id.taskLabel);
-        String taskName = getIntent().getExtras().get("taskName").toString();
-        courseNameLabel.setText(taskName);
+        TextView taskTitleLabel = findViewById(R.id.taskLabel);
+        TextView bodyTask = findViewById(R.id.bodyTaask);
+        TextView stateTask = findViewById(R.id.state);
+
+//        TextView taskTitleLabel = findViewById(R.id.taskLabel);
+
+        String title = getIntent().getExtras().get("title").toString();
+        String body = getIntent().getExtras().get("body").toString();
+        String state = getIntent().getExtras().get("state").toString();
+
+        taskTitleLabel.setText(title);
+        bodyTask.setText(body);
+        stateTask.setText(state);
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

@@ -26,3 +26,8 @@ I added two more  Activities :
 * Refactor your homepage to use a RecyclerView for displaying Task data.
 
 ![Home Page](./screenshots/lab28.PNG)
+
+## lab29
+
+* added rom to the program so the data saved in mobile storage 
+* you can add task from add task activity
