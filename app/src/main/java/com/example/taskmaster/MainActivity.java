@@ -26,25 +26,12 @@ public class MainActivity extends AppCompatActivity {
 
         Button addTaskButton = (Button)findViewById(R.id.addTask);
         Button allTaskButton = (Button)findViewById(R.id.allTasks);
-
-//        Button codingButton = (Button)findViewById(R.id.coding);
-//        Button gymButton = (Button)findViewById(R.id.gym);
-//        Button relaxingButton = (Button)findViewById(R.id.relaxing);
         Button settingsButton = (Button)findViewById(R.id.settingsButton);
 /*recycleView*/
-
-        List<Task> allTasks = new ArrayList<Task>();
-        allTasks.add(new Task("Coding","don't cry","in progress"));
-        allTasks.add(new Task("Gym","work hard don't stop","new"));
-        allTasks.add(new Task("Relaxing","get well sleep","complete"));
-
-
-
-        RecyclerView recyclerView = findViewById(R.id.allTasksView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new TaskAdapter(allTasks));
-
-
+//        AppDatabase db=AppDatabase.getDbInstance(this.getApplicationContext());
+//        RecyclerView recyclerView = findViewById(R.id.allTasksView);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView.setAdapter(new TaskAdapter(db.taskDao().getAll()));
 
         addTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,33 +46,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        codingButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String codingText = codingButton.getText().toString();
-//                Intent goToTaskDetail =new Intent(MainActivity.this,TaskDetail.class);
-//                goToTaskDetail.putExtra("taskName", codingText);
-//                startActivity(goToTaskDetail);
-//            }
-//        });
-//        gymButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String gymText = gymButton.getText().toString();
-//                Intent goToTaskDetail =new Intent(MainActivity.this,TaskDetail.class);
-//                goToTaskDetail.putExtra("taskName", gymText);
-//                startActivity(goToTaskDetail);
-//            }
-//        });
-//        relaxingButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String relaxingText = relaxingButton.getText().toString();
-//                Intent goToTaskDetail =new Intent(MainActivity.this,TaskDetail.class);
-//                goToTaskDetail.putExtra("taskName", relaxingText);
-//                startActivity(goToTaskDetail);
-//            }
-//        });
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,5 +60,10 @@ public class MainActivity extends AppCompatActivity {
         String userName = sharedPreferences.getString("userName","User Name");
         TextView previewUserName = findViewById(R.id.userNamePrev);
         previewUserName.setText(userName);
+        AppDatabase db=AppDatabase.getDbInstance(this.getApplicationContext());
+        RecyclerView recyclerView = findViewById(R.id.allTasksView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new TaskAdapter(db.taskDao().getAll()));
+
     }
 }
