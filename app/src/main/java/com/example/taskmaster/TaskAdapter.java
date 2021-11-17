@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -60,9 +61,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             public void onClick(View view) {
 
                 Intent goToTaskDetail =new Intent(view.getContext(),TaskDetail.class);
-                goToTaskDetail.putExtra("title", holder.task.getTitle());
-                goToTaskDetail.putExtra("body", holder.task.getBody());
-                goToTaskDetail.putExtra("state", holder.task.getState());
+
+                goToTaskDetail.putExtra("id",holder.task.id);
                 view.getContext().startActivity(goToTaskDetail);
             }
         });
