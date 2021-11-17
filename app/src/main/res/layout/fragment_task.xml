@@ -51,6 +51,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/taskTitleInFragment" />
 
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="99dp"
+            android:layout_height="44dp"
+            android:text="Delete"
+            android:textColor="#F4ECEC"
+            android:textSize="10sp"
+            app:backgroundTint="#AC1A1A"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.638"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/taskBodyInFragment" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

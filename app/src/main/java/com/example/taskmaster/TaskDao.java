@@ -18,4 +18,5 @@ public interface TaskDao {
 
     @Query("SELECT * FROM task WHERE id=:id")
      Task getTask(int id);
+
 }

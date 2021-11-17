@@ -2,9 +2,11 @@ package com.example.taskmaster;
 
 import android.content.Intent;
 import android.os.Parcelable;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Update;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +69,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 view.getContext().startActivity(goToTaskDetail);
             }
         });
-
+        Button deleteButton=holder.itemView.findViewById(R.id.delete);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppDatabase db=AppDatabase.getDbInstance(view.getContext());
+                db.taskDao().delete(holder.task);
+                //need to fix below line because that will add the intent on a stack
+               view.getContext().startActivity(new Intent(view.getContext(),MainActivity.class));
+            }
+        });
     }
 
     @Override
