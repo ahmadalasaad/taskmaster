@@ -16,7 +16,6 @@ public interface TaskDao {
     @Delete
     void delete(Task task);
 
-//try to get elemnt by d
-//    @Query("SELECT * FROM task WHERE id=:id")
-//     Task getTask(int id);
+    @Query("SELECT * FROM task WHERE id=:id")
+     Task getTask(int id);
 }

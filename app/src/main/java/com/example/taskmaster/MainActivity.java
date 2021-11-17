@@ -27,11 +27,7 @@ public class MainActivity extends AppCompatActivity {
         Button addTaskButton = (Button)findViewById(R.id.addTask);
         Button allTaskButton = (Button)findViewById(R.id.allTasks);
         Button settingsButton = (Button)findViewById(R.id.settingsButton);
-/*recycleView*/
-//        AppDatabase db=AppDatabase.getDbInstance(this.getApplicationContext());
-//        RecyclerView recyclerView = findViewById(R.id.allTasksView);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerView.setAdapter(new TaskAdapter(db.taskDao().getAll()));
+
 
         addTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override

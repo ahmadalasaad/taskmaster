@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TaskDetail extends AppCompatActivity {
 
@@ -20,16 +21,13 @@ public class TaskDetail extends AppCompatActivity {
         TextView taskTitleLabel = findViewById(R.id.taskLabel);
         TextView bodyTask = findViewById(R.id.bodyTaask);
         TextView stateTask = findViewById(R.id.state);
+        AppDatabase db=AppDatabase.getDbInstance(this.getApplicationContext());
+        int id=getIntent().getIntExtra("id",0);
+        Task task=db.taskDao().getTask(id);
 
-//        TextView taskTitleLabel = findViewById(R.id.taskLabel);
-
-        String title = getIntent().getExtras().get("title").toString();
-        String body = getIntent().getExtras().get("body").toString();
-        String state = getIntent().getExtras().get("state").toString();
-
-        taskTitleLabel.setText(title);
-        bodyTask.setText(body);
-        stateTask.setText(state);
+        taskTitleLabel.setText(task.getTitle());
+        bodyTask.setText(task.getBody());
+        stateTask.setText(task.getState());
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
