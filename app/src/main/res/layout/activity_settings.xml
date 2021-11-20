@@ -6,27 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".Settings">
 
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/userNameLayout"
+        android:layout_width="270dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="196dp"
+        android:hint="userName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.432"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:startIconContentDescription="username field"
+        app:startIconDrawable="@drawable/ic_user"
+        tools:ignore="MissingConstraints"
+        app:endIconMode="clear_text">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/userName"
+            android:inputType="text"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
     <Button
         android:id="@+id/submit"
         android:layout_width="141dp"
         android:layout_height="39dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="36dp"
         android:text="submit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.44"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userName" />
-
-    <EditText
-        android:id="@+id/userName"
-        android:layout_width="265dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="252dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Enter your userName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/userNameLayout"
+        tools:ignore="NotSibling" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

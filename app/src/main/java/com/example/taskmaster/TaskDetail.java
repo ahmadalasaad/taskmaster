@@ -15,8 +15,7 @@ public class TaskDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_detail);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         TextView taskTitleLabel = findViewById(R.id.taskLabel);
         TextView bodyTask = findViewById(R.id.bodyTaask);
@@ -29,13 +28,5 @@ public class TaskDetail extends AppCompatActivity {
         bodyTask.setText(task.getBody());
         stateTask.setText(task.getState());
     }
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 }

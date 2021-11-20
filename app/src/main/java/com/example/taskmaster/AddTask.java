@@ -17,8 +17,7 @@ public class AddTask extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+
         AppDatabase db=AppDatabase.getDbInstance(this.getApplicationContext());
         Button button =findViewById(R.id.addB);
 button.setOnClickListener(new View.OnClickListener() {
@@ -39,13 +38,5 @@ button.setOnClickListener(new View.OnClickListener() {
 });
 
     }
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 }

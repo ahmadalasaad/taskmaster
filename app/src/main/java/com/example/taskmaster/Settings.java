@@ -14,23 +14,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
 public class Settings extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        Button preferencesButton = findViewById(R.id.submit);
+               Button preferencesButton = findViewById(R.id.submit);
 
         preferencesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText userNameField=findViewById(R.id.userName);
+                TextInputEditText userNameField=findViewById(R.id.userName);
                 String userName = userNameField.getText().toString();
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Settings.this);
-                sharedPreferences.edit().putString("userName",userName+"'s").apply();
+                sharedPreferences.edit().putString("userName",userName+"'s tasks").apply();
                 Toast.makeText(Settings.this,"submitted!", Toast.LENGTH_LONG).show();
 //                startActivity(new Intent(Settings.this,MainActivity.class));
                 finish();
@@ -39,13 +40,5 @@ public class Settings extends AppCompatActivity {
         });
 
 }
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 }

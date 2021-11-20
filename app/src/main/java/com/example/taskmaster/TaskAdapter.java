@@ -69,14 +69,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 view.getContext().startActivity(goToTaskDetail);
             }
         });
-        Button deleteButton=holder.itemView.findViewById(R.id.delete);
+        View deleteButton=holder.itemView.findViewById(R.id.delete);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AppDatabase db=AppDatabase.getDbInstance(view.getContext());
                 db.taskDao().delete(holder.task);
                 //need to fix below line because that will add the intent on a stack
-               view.getContext().startActivity(new Intent(view.getContext(),MainActivity.class));
+//               view.getContext().startActivity(new Intent(view.getContext(),MainActivity.class));
+                view.onFinishTemporaryDetach();
+                view.getContext().startActivity(new Intent(view.getContext(),MainActivity.class));
             }
         });
     }
