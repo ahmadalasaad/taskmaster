@@ -16,13 +16,15 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Update;
 
+import com.amplifyframework.datastore.generated.model.Task;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder>{
-    private List<Task> allTask=new ArrayList<Task>();
+    private List<com.amplifyframework.datastore.generated.model.Task> allTask=new ArrayList<com.amplifyframework.datastore.generated.model.Task>();
 
-    public TaskAdapter(List<Task> allTask) {
+    public TaskAdapter(List<com.amplifyframework.datastore.generated.model.Task> allTask) {
         this.allTask = allTask;
     }
 
@@ -56,31 +58,29 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         taskTitle.setText(holder.task.getTitle());
         taskBody.setText(holder.task.getBody());
         taskState.setText(holder.task.getState());
-
-        ConstraintLayout constraintLayout=holder.itemView.findViewById(R.id.taskCon);
-
-        constraintLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent goToTaskDetail =new Intent(view.getContext(),TaskDetail.class);
-
-                goToTaskDetail.putExtra("id",holder.task.id);
-                view.getContext().startActivity(goToTaskDetail);
-            }
-        });
-        View deleteButton=holder.itemView.findViewById(R.id.delete);
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AppDatabase db=AppDatabase.getDbInstance(view.getContext());
-                db.taskDao().delete(holder.task);
-                //need to fix below line because that will add the intent on a stack
-//               view.getContext().startActivity(new Intent(view.getContext(),MainActivity.class));
-                view.onFinishTemporaryDetach();
-                view.getContext().startActivity(new Intent(view.getContext(),MainActivity.class));
-            }
-        });
+//
+//        ConstraintLayout constraintLayout=holder.itemView.findViewById(R.id.taskCon);
+//
+//        constraintLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                Intent goToTaskDetail =new Intent(view.getContext(),TaskDetail.class);
+//
+//                goToTaskDetail.putExtra("id",holder.task);
+//                view.getContext().startActivity(goToTaskDetail);
+//            }
+//        });
+//        View deleteButton=holder.itemView.findViewById(R.id.delete);
+//        deleteButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                AppDatabase db=AppDatabase.getDbInstance(view.getContext());
+//                db.taskDao().delete(holder.task);
+//                view.onFinishTemporaryDetach();
+//                view.getContext().startActivity(new Intent(view.getContext(),MainActivity.class));
+//            }
+//        });
     }
 
     @Override
@@ -88,11 +88,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         return allTask.size();
     }
 
-    public List<Task> getAllTask() {
+    public List<com.amplifyframework.datastore.generated.model.Task> getAllTask() {
         return allTask;
     }
 
-    public void setAllTask(List<Task> allTask) {
+    public void setAllTask(List<com.amplifyframework.datastore.generated.model.Task> allTask) {
         this.allTask = allTask;
     }
 }

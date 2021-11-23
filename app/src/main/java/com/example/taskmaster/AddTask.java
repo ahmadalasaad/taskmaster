@@ -5,11 +5,16 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Task;
 
 public class AddTask extends AppCompatActivity {
 
@@ -31,7 +36,15 @@ button.setOnClickListener(new View.OnClickListener() {
         String bodyText=taskBody.getText().toString();
         String stateText=taskState.getText().toString();
 
-        db.taskDao().insertTask(new Task(titleText,bodyText,stateText));
+        Task t= Task.builder().title(titleText).body(bodyText).state(stateText).build(); //task from aws
+
+        Amplify.API.mutate(
+                ModelMutation.create(t),
+                response -> Log.i("MyAmplifyApp", "Added Task with id: " + response.getData().getId()),
+                error -> Log.e("MyAmplifyApp", "Create failed", error)
+        );
+
+//        db.taskDao().insertTask(new Task(titleText,bodyText,stateText));
         Toast.makeText(getApplicationContext(), "Task Added", Toast.LENGTH_LONG).show();
         finish();
     }
