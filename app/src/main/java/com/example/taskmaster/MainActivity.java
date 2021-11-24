@@ -28,6 +28,7 @@ import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
+import com.amplifyframework.datastore.generated.model.Team;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.amplifyframework.datastore.generated.model.Task;
 import java.util.ArrayList;
