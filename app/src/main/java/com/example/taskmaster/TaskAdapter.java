@@ -3,10 +3,12 @@ package com.example.taskmaster;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +18,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Update;
 
+import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
 
 import java.util.ArrayList;
@@ -37,6 +41,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
             this.itemView=itemView;
+
         }
     }
     @NonNull
@@ -58,29 +63,42 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         taskTitle.setText(holder.task.getTitle());
         taskBody.setText(holder.task.getBody());
         taskState.setText(holder.task.getState());
-//
-//        ConstraintLayout constraintLayout=holder.itemView.findViewById(R.id.taskCon);
-//
-//        constraintLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                Intent goToTaskDetail =new Intent(view.getContext(),TaskDetail.class);
-//
-//                goToTaskDetail.putExtra("id",holder.task);
-//                view.getContext().startActivity(goToTaskDetail);
-//            }
-//        });
-//        View deleteButton=holder.itemView.findViewById(R.id.delete);
-//        deleteButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                AppDatabase db=AppDatabase.getDbInstance(view.getContext());
-//                db.taskDao().delete(holder.task);
-//                view.onFinishTemporaryDetach();
-//                view.getContext().startActivity(new Intent(view.getContext(),MainActivity.class));
-//            }
-//        });
+
+        ConstraintLayout constraintLayout=holder.itemView.findViewById(R.id.taskCon);
+
+        constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent goToTaskDetail =new Intent(view.getContext(),TaskDetail.class);
+
+                goToTaskDetail.putExtra("title",holder.task.getTitle());
+                goToTaskDetail.putExtra("body",holder.task.getBody());
+                goToTaskDetail.putExtra("state",holder.task.getState());
+                view.getContext().startActivity(goToTaskDetail);
+            }
+        });
+/*--------------------delete function-------------------------------*/
+          ImageView  deleteButton=holder.itemView.findViewById(R.id.delete);
+
+      deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Amplify.API.mutate(
+                        ModelMutation.delete(holder.task),
+                        response -> Log.i("MyAmplifyApp", "delete Task with id: " + response.getData()),
+                        error -> Log.e("MyAmplifyApp", "Create failed", error)
+                );
+
+                Toast.makeText(view.getContext(), "Task deleted", Toast.LENGTH_LONG).show();
+
+                view.onFinishTemporaryDetach();
+                view.getContext().startActivity(new Intent(view.getContext(),MainActivity.class));
+            }
+        });
+
+      /*-----------------------------------------------*/
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.taskmaster;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,7 +11,11 @@ import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.preference.PreferenceManager;
+import android.util.Half;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -28,28 +33,22 @@ import com.amplifyframework.datastore.generated.model.Task;
 import java.util.ArrayList;
 import java.util.List;
 public class MainActivity extends AppCompatActivity {
+//public     List<Task> listDynamo=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
-            Amplify.addPlugin(new AWSApiPlugin());
-            Amplify.addPlugin(new AWSDataStorePlugin());
-            Amplify.configure(getApplicationContext());
-            Log.i("Tutorial", "Initialized Amplify");
-        } catch (AmplifyException failure) {
-            Log.e("Tutorial", "Could not initialize Amplify", failure);
-        }
-        Amplify.DataStore.observe(Task.class,
-                started -> Log.i("Tutorial", "Observation began."),
-                change -> Log.i("Tutorial", change.item().toString()),
-                failure -> Log.e("Tutorial", "Observation failed.", failure),
-                () -> Log.i("Tutorial", "Observation complete.")
-        );
-
-
-
         setContentView(R.layout.activity_main);
+
+        try {
+            // Add these lines to add the AWSApiPlugin plugins
+            Amplify.addPlugin(new AWSApiPlugin());
+            Amplify.configure(getApplicationContext());
+
+            Log.i("TaskMaster", "Initialized Amplify");
+        } catch (AmplifyException error) {
+            Log.e("TaskMaster", "Could not initialize Amplify", error);
+        }
 
         ExtendedFloatingActionButton addTaskButton = findViewById(R.id.extended_fab);
         ExtendedFloatingActionButton allTaskButton = findViewById(R.id.extended_fab_all);
@@ -79,31 +78,43 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected  void onResume() {
         super.onResume();
-        List<Task> listDynamo=new ArrayList<>();
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         String userName = sharedPreferences.getString("userName","User Name");
         TextView previewUserName = findViewById(R.id.userNamePrev);
         previewUserName.setText(userName);
 
-        AsyncTask.execute(new Runnable() {
+        /*----------------------------------------------*/
+        RecyclerView recyclerView = findViewById(R.id.allTasksView);
+
+        Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
+
             @Override
-            public void run() {
-                Amplify.API.query(
-                        ModelQuery.list(Task.class),
-                        response -> {
-                            for (Task task : response.getData()) {
-                                listDynamo.add(task);
-                                Log.i("MyAmplifyApp", task.getTitle());
-                            }
-
-                        },
-                        error -> Log.e("MyAmplifyApp", "query falier", error));
-
+            public boolean handleMessage(@NonNull Message message) {
+                recyclerView.getAdapter().notifyDataSetChanged();
+                return false;
             }
         });
-        RecyclerView recyclerView = findViewById(R.id.allTasksView);
+
+        List<Task> allTask = new ArrayList<>();
+        Amplify.API.query(
+                ModelQuery.list(com.amplifyframework.datastore.generated.model.Task.class),
+                response -> {
+                    for (Task task : response.getData()) {
+                        allTask.add(task);
+
+                    }
+                    handler.sendEmptyMessage(1);
+                },
+                error -> Log.e("TaskMaster", error.toString(), error)
+        );
+
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        recyclerView.setAdapter(new TaskAdapter(listDynamo));
+        recyclerView.setAdapter(new TaskAdapter(allTask));
+        /*--------------------------------------*/
+
+
+
     }
 }
+

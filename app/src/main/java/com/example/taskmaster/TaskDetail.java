@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amplifyframework.datastore.generated.model.Task;
+
 public class TaskDetail extends AppCompatActivity {
 
     @Override
@@ -20,13 +22,11 @@ public class TaskDetail extends AppCompatActivity {
         TextView taskTitleLabel = findViewById(R.id.taskLabel);
         TextView bodyTask = findViewById(R.id.bodyTaask);
         TextView stateTask = findViewById(R.id.state);
-        AppDatabase db=AppDatabase.getDbInstance(this.getApplicationContext());
         int id=getIntent().getIntExtra("id",0);
-//        Task task=db.taskDao().getTask(id);
-//
-//        taskTitleLabel.setText(task.getTitle());
-//        bodyTask.setText(task.getBody());
-//        stateTask.setText(task.getState());
+
+        taskTitleLabel.setText(getIntent().getStringExtra("title"));
+        bodyTask.setText(getIntent().getStringExtra("body"));
+        stateTask.setText(getIntent().getStringExtra("state"));
     }
 
 }

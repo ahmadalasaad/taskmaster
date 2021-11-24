@@ -29,5 +29,11 @@ I added two more  Activities :
 
 ## lab29
 
-* added rom to the program so the data saved in mobile storage 
+* added room to the program so the data saved in mobile storage 
 * you can add task from add task activity
+
+##lab32
+
+* put aws nested of room in my program
+* add task to the database
+* get all task from database
