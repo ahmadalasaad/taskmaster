@@ -31,39 +31,28 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="116dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="28dp"
-        android:text="Task Description"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleF" />
-
     <Button
         android:id="@+id/addB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="108dp"
-        android:layout_marginLeft="108dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="144dp"
+        android:layout_marginLeft="144dp"
+        android:layout_marginTop="12dp"
         android:text="ADD TASK"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stateF" />
+        app:layout_constraintTop_toBottomOf="@+id/teams" />
 
     <EditText
         android:id="@+id/titleF"
         android:layout_width="334dp"
         android:layout_height="61dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="8dp"
         android:ems="10"
+        android:hint="my task"
         android:inputType="textPersonName"
         android:text=""
-        android:hint="my task"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -74,22 +63,22 @@
         android:layout_height="67dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:ems="10"
+        android:hint="do something"
         android:inputType="textPersonName"
         android:text=""
-        android:hint="do something"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/titleF" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="108dp"
-        android:layout_marginLeft="108dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="144dp"
+        android:layout_marginLeft="144dp"
+        android:layout_marginTop="16dp"
         android:text="Total Tasks : 0"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,9 +92,9 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="16dp"
         android:ems="10"
+        android:hint="state"
         android:inputType="textPersonName"
         android:text=""
-        android:hint="state"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
@@ -119,4 +108,34 @@
         android:text="state"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bodyF" />
+
+    <RadioGroup
+        android:id="@+id/teams"
+        android:layout_width="wrap_content"
+        android:layout_height="151dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.451"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stateF">
+
+        <RadioButton
+            android:id="@+id/teamA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A" />
+
+        <RadioButton
+            android:id="@+id/teamB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="B" />
+
+        <RadioButton
+            android:id="@+id/teamC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="C" />
+    </RadioGroup>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
