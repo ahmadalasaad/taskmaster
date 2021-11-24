@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -23,7 +24,7 @@ public class AddTask extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
-        AppDatabase db=AppDatabase.getDbInstance(this.getApplicationContext());
+//        AppDatabase db=AppDatabase.getDbInstance(this.getApplicationContext());
         Button button =findViewById(R.id.addB);
 button.setOnClickListener(new View.OnClickListener() {
     @Override
@@ -47,6 +48,7 @@ button.setOnClickListener(new View.OnClickListener() {
 //        db.taskDao().insertTask(new Task(titleText,bodyText,stateText));
         Toast.makeText(getApplicationContext(), "Task Added", Toast.LENGTH_LONG).show();
         finish();
+
     }
 });
 
