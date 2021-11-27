@@ -29,13 +29,13 @@ public class Settings extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 TextInputEditText userNameField=findViewById(R.id.userName);
+                TextInputEditText teamNameField=findViewById(R.id.teamName);
                 String userName = userNameField.getText().toString();
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Settings.this);
                 sharedPreferences.edit().putString("userName",userName+"'s tasks").apply();
+                sharedPreferences.edit().putString("teamName",teamNameField.getText().toString()).apply();
                 Toast.makeText(Settings.this,"submitted!", Toast.LENGTH_LONG).show();
-//                startActivity(new Intent(Settings.this,MainActivity.class));
                 finish();
-
             }
         });
 

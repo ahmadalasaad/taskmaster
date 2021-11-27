@@ -83,4 +83,15 @@
         app:layout_constraintTop_toBottomOf="@+id/allTasksView"
         app:layout_constraintVertical_bias="0.197"
         tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/teamNameView"
+        android:layout_width="130dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="48dp"
+        android:text="team name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/extended_fab" />
 </androidx.constraintlayout.widget.ConstraintLayout>
