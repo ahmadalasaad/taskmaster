@@ -35,12 +35,12 @@
         android:id="@+id/addB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="144dp"
-        android:layout_marginLeft="144dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="40dp"
         android:text="ADD TASK"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/teams" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
     <EditText
         android:id="@+id/titleF"
@@ -109,33 +109,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bodyF" />
 
-    <RadioGroup
-        android:id="@+id/teams"
-        android:layout_width="wrap_content"
-        android:layout_height="151dp"
-        android:layout_marginTop="20dp"
+    <com.google.android.material.textfield.TextInputLayout
+
+        android:id="@+id/textInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:hint="team List"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.451"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stateF">
+        app:layout_constraintTop_toBottomOf="@+id/stateF"
+        tools:ignore="MissingConstraints">
 
-        <RadioButton
-            android:id="@+id/teamA"
-            android:layout_width="wrap_content"
+        <AutoCompleteTextView
+            android:id="@+id/menu"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="A" />
-
-        <RadioButton
-            android:id="@+id/teamB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="B" />
-
-        <RadioButton
-            android:id="@+id/teamC"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="C" />
-    </RadioGroup>
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,13 +1,12 @@
-type Task @model @key(name: "byTeam", fields: ["teamId"]){
+type Task @model @key(name: "byTeam", fields: ["teamName","title","body","state"]){
   id: ID!
-  teamId: ID!
+  teamName: String!
   title: String
   body: String
   state: String
-  team: Team! @connection(fields: ["teamId"])
 }
 type Team @model {
   id: ID!
   teamName: String!
-  tasks: [Task] @connection(keyName: "byTeam", fields: ["id"])
+  tasks: [Task] @connection(keyName: "byTeam", fields: ["teamName"])
 }

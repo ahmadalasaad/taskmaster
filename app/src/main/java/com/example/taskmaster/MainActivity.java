@@ -32,9 +32,13 @@ import com.amplifyframework.datastore.generated.model.Team;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.amplifyframework.datastore.generated.model.Task;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 public class MainActivity extends AppCompatActivity {
 //public     List<Task> listDynamo=new ArrayList<>();
+public Set<String> teamNameList=new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,27 @@ public class MainActivity extends AppCompatActivity {
             Log.e("TaskMaster", "Could not initialize Amplify", error);
         }
 
+        /*----------------------adding teams-----------------------*/
+//        Team teamA= Team.builder().teamName("a").build(); //team from aws
+//        Amplify.API.mutate(
+//                ModelMutation.create(teamA),
+//                response -> Log.i("MyAmplifyApp", "Added team with id: " + response.getData().getId()),
+//                error -> Log.e("MyAmplifyApp", "Create failed", error)
+//        );
+//        Team teamB= Team.builder().teamName("b").build(); //team from aws
+//        Amplify.API.mutate(
+//                ModelMutation.create(teamB),
+//                response -> Log.i("MyAmplifyApp", "Added team with id: " + response.getData().getId()),
+//                error -> Log.e("MyAmplifyApp", "Create failed", error)
+//        );
+//
+//        Team teamC= Team.builder().teamName("c").build(); //team from aws
+//        Amplify.API.mutate(
+//                ModelMutation.create(teamC),
+//                response -> Log.i("MyAmplifyApp", "Added team with id: " + response.getData().getId()),
+//                error -> Log.e("MyAmplifyApp", "Create failed", error)
+//        );
+        /*---------------------------------------------------*/
         ExtendedFloatingActionButton addTaskButton = findViewById(R.id.extended_fab);
         ExtendedFloatingActionButton allTaskButton = findViewById(R.id.extended_fab_all);
         View settingsButton = findViewById(R.id.settings);
@@ -82,12 +107,30 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         String userName = sharedPreferences.getString("userName","User Name");
+        String teamName = sharedPreferences.getString("teamName","team name");
         TextView previewUserName = findViewById(R.id.userNamePrev);
+        TextView previewTeamName = findViewById(R.id.teamNameView);
         previewUserName.setText(userName);
+        previewTeamName.setText(teamName);
 
         /*----------------------------------------------*/
-        RecyclerView recyclerView = findViewById(R.id.allTasksView);
+        Amplify.API.query(
+                ModelQuery.list(Team.class),
+                response -> {
+                    for (Team team : response.getData()) {
+                        Log.i("teamName",team.getTeamName());
+                        teamNameList.add(team.getTeamName());
+                    }
+                    SharedPreferences sharedPreferences1 = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                    sharedPreferences1.edit().putStringSet("teams",teamNameList).apply();
+                },
 
+                error -> Log.e("TaskMaster", error.toString(), error)
+        );
+
+
+        /*----------------------------------------------------*/
+        RecyclerView recyclerView = findViewById(R.id.allTasksView);
         Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
 
             @Override
@@ -96,14 +139,14 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
         List<Task> allTask = new ArrayList<>();
         Amplify.API.query(
-                ModelQuery.list(com.amplifyframework.datastore.generated.model.Task.class),
+                ModelQuery.list(Task.class),
                 response -> {
                     for (Task task : response.getData()) {
-                        allTask.add(task);
-
+                        if (task.getTeamName().equals(teamName)) {
+                            allTask.add(task);
+                        }
                     }
                     handler.sendEmptyMessage(1);
                 },
@@ -113,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         recyclerView.setAdapter(new TaskAdapter(allTask));
         /*--------------------------------------*/
-
 
 
     }

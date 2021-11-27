@@ -81,7 +81,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 /*--------------------delete function-------------------------------*/
           ImageView  deleteButton=holder.itemView.findViewById(R.id.delete);
 
-      deleteButton.setOnClickListener(new View.OnClickListener() {
+          deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
