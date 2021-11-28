@@ -100,14 +100,14 @@
 
     <ImageView
         android:id="@+id/logout"
-        android:layout_width="54dp"
-        android:layout_height="49dp"
+        android:layout_width="56dp"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
         app:layout_constraintEnd_toStartOf="@+id/settings"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logout" />
+        app:srcCompat="@drawable/signout" />
 
     <TextView
         android:id="@+id/textView3"
@@ -133,5 +133,7 @@
         android:layout_marginRight="96dp"
         app:layout_constraintEnd_toStartOf="@+id/settings"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_login" />
+        app:srcCompat="@drawable/ic_login"
+        android:tint="@color/black"
+        tools:ignore="VectorDrawableCompat" />
 </androidx.constraintlayout.widget.ConstraintLayout>
