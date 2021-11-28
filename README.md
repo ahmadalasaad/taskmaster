@@ -42,3 +42,7 @@ I added two more  Activities :
 
 * add team to the app
 * provide the task in main related to user team 
+
+##lab36
+
+* add authorization to the app

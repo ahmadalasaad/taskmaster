@@ -19,6 +19,7 @@ import android.util.Half;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,9 +27,15 @@ import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.auth.AuthChannelEventName;
+import com.amplifyframework.auth.AuthUserAttribute;
+import com.amplifyframework.auth.AuthUserAttributeKey;
+import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.core.InitializationStatus;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.datastore.generated.model.Team;
+import com.amplifyframework.hub.HubChannel;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.amplifyframework.datastore.generated.model.Task;
 import java.util.ArrayList;
@@ -47,6 +54,7 @@ public Set<String> teamNameList=new HashSet<>();
 
         try {
             // Add these lines to add the AWSApiPlugin plugins
+            Amplify.addPlugin(new AWSCognitoAuthPlugin());
             Amplify.addPlugin(new AWSApiPlugin());
             Amplify.configure(getApplicationContext());
 
@@ -54,8 +62,46 @@ public Set<String> teamNameList=new HashSet<>();
         } catch (AmplifyException error) {
             Log.e("TaskMaster", "Could not initialize Amplify", error);
         }
+        Amplify.Auth.fetchAuthSession(
+                result ->{ Log.i("AmplifyQuickstart", result.toString());
 
-        /*----------------------adding teams-----------------------*/
+                },
+                        error -> Log.e("AmplifyQuickstart", error.toString())
+        );
+
+        Amplify.Auth.fetchUserAttributes(
+                attributes -> Log.i("AuthDemo", "User attributes = " + attributes.toString()),
+                error -> Log.e("AuthDemo", "Failed to fetch user attributes.", error)
+        );
+
+        ImageView login=findViewById(R.id.login);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Amplify.Auth.signInWithWebUI(
+                        MainActivity.this,
+                        result -> {
+                            Log.i("AuthQuickStart", result.toString());
+                        },
+                        error -> Log.e("AuthQuickStart", error.toString())
+                );
+            }
+        });
+        ImageView logout=findViewById(R.id.logout);
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Amplify.Auth.signOut(
+                        () -> Log.i("AuthQuickstart", "Signed out successfully"),
+                        error -> Log.e("AuthQuickstart", error.toString())
+                );
+
+            }
+        });
+
+
+//        /*----------------------adding teams-----------------------*/
 //        Team teamA= Team.builder().teamName("a").build(); //team from aws
 //        Amplify.API.mutate(
 //                ModelMutation.create(teamA),
@@ -110,8 +156,9 @@ public Set<String> teamNameList=new HashSet<>();
         String teamName = sharedPreferences.getString("teamName","team name");
         TextView previewUserName = findViewById(R.id.userNamePrev);
         TextView previewTeamName = findViewById(R.id.teamNameView);
-        previewUserName.setText(userName);
-        previewTeamName.setText(teamName);
+
+//            previewUserName.setText(userName;
+            previewTeamName.setText(teamName);
 
         /*----------------------------------------------*/
         Amplify.API.query(
@@ -156,8 +203,23 @@ public Set<String> teamNameList=new HashSet<>();
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         recyclerView.setAdapter(new TaskAdapter(allTask));
         /*--------------------------------------*/
+        ImageView logout=findViewById(R.id.logout);
+        ImageView login=findViewById(R.id.login);
 
+        Amplify.Auth.fetchAuthSession(
+                result ->{
+                    if(result.isSignedIn()){
+                        login.setVisibility(View.INVISIBLE);
+                        previewUserName.setText(Amplify.Auth.getCurrentUser().getUsername());
+                    }else{
+                        logout.setVisibility(View.INVISIBLE);
+                   }
+                },
+                error -> Log.e("AmplifyQuickstart", error.toString())
+        );
+//        Log.i("username",Amplify.Auth.getCurrentUser().getUsername());
 
     }
+
 }
 
