@@ -23,6 +23,11 @@
       "StackName": "amplify-taskmaster-ahmadenv-192615",
       "StackId": "arn:aws:cloudformation:us-east-1:720595577969:stack/amplify-taskmaster-ahmadenv-192615/a4850630-4d4b-11ec-b738-0eb6b25cde4b",
       "AmplifyAppId": "d2iyv3bh401vvz"
+    },
+    "categories": {
+      "auth": {
+        "taskmasterc8551033": {}
+      }
     }
   }
 }
