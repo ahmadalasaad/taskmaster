@@ -126,7 +126,6 @@ public Set<String> teamNameList=new HashSet<>();
         ExtendedFloatingActionButton allTaskButton = findViewById(R.id.extended_fab_all);
         View settingsButton = findViewById(R.id.settings);
 
-
         addTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
