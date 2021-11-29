@@ -63,7 +63,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         taskTitle.setText(holder.task.getTitle());
         taskBody.setText(holder.task.getBody());
         taskState.setText(holder.task.getState());
-
         ConstraintLayout constraintLayout=holder.itemView.findViewById(R.id.taskCon);
 
         constraintLayout.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +74,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 goToTaskDetail.putExtra("title",holder.task.getTitle());
                 goToTaskDetail.putExtra("body",holder.task.getBody());
                 goToTaskDetail.putExtra("state",holder.task.getState());
+                goToTaskDetail.putExtra("key",holder.task.getFile());
                 view.getContext().startActivity(goToTaskDetail);
             }
         });

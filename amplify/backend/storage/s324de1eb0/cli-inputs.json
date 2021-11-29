@@ -1,0 +1,16 @@
+{
+  "resourceName": "s324de1eb0",
+  "policyUUID": "24de1eb0",
+  "bucketName": "taskstoreg",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

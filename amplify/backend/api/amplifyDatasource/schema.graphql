@@ -1,9 +1,10 @@
-type Task @model @key(name: "byTeam", fields: ["teamName","title","body","state"]){
+type Task @model @key(name: "byTeam", fields: ["teamName","title","body","state","file"]){
   id: ID!
   teamName: String!
   title: String
   body: String
   state: String
+  file:String
 }
 type Team @model {
   id: ID!
