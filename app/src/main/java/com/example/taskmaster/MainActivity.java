@@ -217,8 +217,6 @@ public Set<String> teamNameList=new HashSet<>();
                 error -> Log.e("AmplifyQuickstart", error.toString())
         );
 //        Log.i("username",Amplify.Auth.getCurrentUser().getUsername());
-
     }
-
 }
 
