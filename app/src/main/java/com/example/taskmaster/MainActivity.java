@@ -36,6 +36,7 @@ import com.amplifyframework.core.InitializationStatus;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.datastore.generated.model.Team;
 import com.amplifyframework.hub.HubChannel;
+import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.amplifyframework.datastore.generated.model.Task;
 import java.util.ArrayList;
@@ -55,6 +56,7 @@ public Set<String> teamNameList=new HashSet<>();
         try {
             // Add these lines to add the AWSApiPlugin plugins
             Amplify.addPlugin(new AWSCognitoAuthPlugin());
+            Amplify.addPlugin(new AWSS3StoragePlugin());
             Amplify.addPlugin(new AWSApiPlugin());
             Amplify.configure(getApplicationContext());
 
