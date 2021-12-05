@@ -46,3 +46,6 @@ I added two more  Activities :
 ##lab36
 
 * add authorization to the app
+
+##lab 41
+* add intent filter

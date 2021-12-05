@@ -1,5 +1,8 @@
 package com.example.taskmaster;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,7 +55,7 @@ public class AddTask extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AddTask.this);
-        Set<String> allTeams= sharedPreferences.getStringSet("teams",new HashSet<String>());
+        Set<String> allTeams = sharedPreferences.getStringSet("teams", new HashSet<String>());
 
 
         AutoCompleteTextView menuView = findViewById(R.id.menu);
@@ -60,30 +63,48 @@ public class AddTask extends AppCompatActivity {
         menuView.setAdapter(adapter);
         menuView.setInputType(InputType.TYPE_NULL);
 
-        Button addTask=findViewById(R.id.addB);
+        Button addTask = findViewById(R.id.addB);
 
         addTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText title=findViewById(R.id.titleF);
-                EditText body=findViewById(R.id.bodyF);
-                EditText state=findViewById(R.id.stateF);
-                t =Task.builder().teamName(menuView.getText().toString()).title(title.getText().toString()).body(body.getText().toString()).state(state.getText().toString()).file(key).build();
+                EditText title = findViewById(R.id.titleF);
+                EditText body = findViewById(R.id.bodyF);
+                EditText state = findViewById(R.id.stateF);
+                t = Task.builder().teamName(menuView.getText().toString()).title(title.getText().toString()).body(body.getText().toString()).state(state.getText().toString()).file(key).build();
                 Amplify.API.mutate(
-                ModelMutation.create(t),
-                response -> Log.i("MyAmplifyApp", "Added Task with id: " + response.getData().getId()),
-                error -> Log.e("MyAmplifyApp", "Create failed", error)
-        );
+                        ModelMutation.create(t),
+                        response -> Log.i("MyAmplifyApp", "Added Task with id: " + response.getData().getId()),
+                        error -> Log.e("MyAmplifyApp", "Create failed", error)
+                );
                 Toast.makeText(getApplicationContext(), "Task Added", Toast.LENGTH_LONG).show();
                 finish();
-
             }
         });
 
+
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+        if (Intent.ACTION_SEND.equals(action) && type != null) {
+            if (type.startsWith("image/")) {
+                handleSendImage(intent); // Handle single image being sent
+            }
+        }
+
+
     }
 
+    void handleSendImage(Intent intent) {
+        Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+        if (imageUri != null) {
+            // Update UI to reflect image being shared
+            uploadInputStream(imageUri);
+            Toast.makeText(getApplicationContext(),imageUri.getPath(),Toast.LENGTH_SHORT).show();
+        }
+    }
 
-    @Override
+        @Override
     public void onActivityResult(int requestCode, int resultCode,
                                  Intent resultData) {
         super.onActivityResult(requestCode, resultCode, resultData);
@@ -94,6 +115,8 @@ public class AddTask extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),uri.getPath(),Toast.LENGTH_SHORT).show();
             }
         }
+
+
     }
 
     public void openfilechooser(View view){
@@ -105,7 +128,9 @@ public class AddTask extends AppCompatActivity {
     private void uploadInputStream(Uri uri) {
         try {
             InputStream exampleInputStream = getContentResolver().openInputStream(uri);
-            key=Double.toString(Math.random());
+
+            File file=new File(uri.getPath());
+            key=file.getName();
             Amplify.Storage.uploadInputStream(
                     key,
                     exampleInputStream,
