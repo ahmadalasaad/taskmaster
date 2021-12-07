@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.storage.options.StorageDownloadFileOptions;
 
 import java.io.File;
+import java.util.Locale;
 
 public class TaskDetail extends AppCompatActivity {
 
@@ -33,7 +35,11 @@ public class TaskDetail extends AppCompatActivity {
         TextView taskTitleLabel = findViewById(R.id.taskLabel);
         TextView bodyTask = findViewById(R.id.bodyTaask);
         TextView stateTask = findViewById(R.id.state);
-        int id=getIntent().getIntExtra("id",0);
+
+        Double altitude=getIntent().getDoubleExtra("lat",0);
+        Double longitude = getIntent().getDoubleExtra("lon",0);
+        Log.i("ahmad",altitude+"long");
+        Log.i("ahmad",longitude+"lat");
 
         taskTitleLabel.setText(getIntent().getStringExtra("title"));
         bodyTask.setText(getIntent().getStringExtra("body"));
@@ -78,6 +84,17 @@ public class TaskDetail extends AppCompatActivity {
                 },
                 error -> Log.e("MyAmplifyApp",  "Download Failure", error)
         );
+
+        Button loc=findViewById(R.id.loc);
+        loc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?q=loc:%f,%f", altitude,longitude);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                startActivity(intent);
+            }
+        });
+
     }
 
 }

@@ -4,13 +4,19 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -35,6 +41,9 @@ import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.datastore.generated.model.Team;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,14 +55,45 @@ import java.util.Objects;
 import java.util.Set;
 
 public class AddTask extends AppCompatActivity {
-    public   Task t;
-    String key=null;
+    public Task t;
+    String key = null;
     Uri uri = null;
+    private double lat;
+    private double lon;
+    private FusedLocationProviderClient fusedLocationClient;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1212);
+
+        }else {
+            fusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            if (location != null) {
+                                    lat=location.getLatitude();
+                                    lon=location.getLongitude();
+                                Toast.makeText(AddTask.this, "Location: "+location, Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                Toast.makeText(AddTask.this, "null", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }});
+
+
+        }
+
+
+
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AddTask.this);
         Set<String> allTeams = sharedPreferences.getStringSet("teams", new HashSet<String>());
 
@@ -71,7 +111,7 @@ public class AddTask extends AppCompatActivity {
                 EditText title = findViewById(R.id.titleF);
                 EditText body = findViewById(R.id.bodyF);
                 EditText state = findViewById(R.id.stateF);
-                t = Task.builder().teamName(menuView.getText().toString()).title(title.getText().toString()).body(body.getText().toString()).state(state.getText().toString()).file(key).build();
+                t = Task.builder().teamName(menuView.getText().toString()).title(title.getText().toString()).body(body.getText().toString()).state(state.getText().toString()).file(key).lat(lat).lon(lon).build();
                 Amplify.API.mutate(
                         ModelMutation.create(t),
                         response -> Log.i("MyAmplifyApp", "Added Task with id: " + response.getData().getId()),
@@ -91,14 +131,11 @@ public class AddTask extends AppCompatActivity {
                 handleSendImage(intent); // Handle single image being sent
             }
         }
-
-
     }
 
     void handleSendImage(Intent intent) {
         Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
         if (imageUri != null) {
-            // Update UI to reflect image being shared
             uploadInputStream(imageUri);
             Toast.makeText(getApplicationContext(),imageUri.getPath(),Toast.LENGTH_SHORT).show();
         }
